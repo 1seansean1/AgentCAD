@@ -1,0 +1,12 @@
+{
+  "name": "AgentCAD",
+  "description": "n8n workflows for automated CAD processes",
+  "version": "0.1.0",
+  "n8n": {
+    "instanceUrl": "https://n8n-production-7a2c.up.railway.app",
+    "projectId": "vrikaMvfkO4wce9w",
+    "apiVersion": "v1"
+  },
+  "workflows": [],
+  "notes": "Workflow configurations will be added as they are created"
+}
