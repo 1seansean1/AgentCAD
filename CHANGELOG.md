@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Onshape integration planning and documentation
+  - `docs/ONSHAPE_INTEGRATION.md` - Comprehensive Onshape API integration guide
+  - Onshape chosen as web-based CAD platform for AI agents
+  - Updated workflow documentation with Onshape integration details
+  - Added Onshape credentials to `.env.example`
+
 ### Planned
-- Define AgentCAD workflow requirements
-- Implement workflow nodes and logic
+- Set up Onshape account and generate API keys
+- Configure Onshape credentials in n8n
+- Build proof-of-concept workflow nodes:
+  - Document creation
+  - FeatureScript execution
+  - Model export
+- Implement AI agent CAD generation workflow
 - Add workflow testing and validation
 
 ## [0.1.0] - 2026-01-11
