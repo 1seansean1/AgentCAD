@@ -1,8 +1,8 @@
 # AgentCAD Architecture Decisions
 
-**Version**: 0.1.0
+**Version**: 0.1.1
 **Last Updated**: 2026-01-11
-**Status**: Initial decisions for MVP
+**Status**: Refined decisions for MVP incorporating strategic feedback
 
 This document records architectural choices for the AgentCAD agentic CAD automation system. Each decision includes the current choice, rationale, and trade-offs.
 
@@ -50,9 +50,9 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 **Decision**: Single-agent with specialized tools (Phase 1)
 - One agent orchestrates entire CAD workflow
 - Tools: Onshape API endpoints (create doc, add features, export)
-- Future: Multi-agent (design → validate → export) if complexity warrants
+- Future: Multi-agent (design → validate → export) if complexity warrants; integrate LangGraph as the "brain" (code-based state orchestrator) within a single Python node or microservice, while preserving n8n as the "body" (API glue, webhooks, triggers) to avoid conflicts in state management
 
-**Rationale**: Start simple, validate approach, avoid premature optimization
+**Rationale**: Start simple, validate approach, avoid premature optimization; LangGraph integration enhances orchestration for growing complexity without disrupting n8n's visual workflow
 **Trade-offs**: ✅ Simpler implementation/debugging, lower latency | ❌ Limited parallelization, potential complexity as features grow
 **Alternatives Considered**:
 - Multi-agent from start (rejected: too complex for MVP)
@@ -94,12 +94,12 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 
 ## Memory Architecture
 
-**Decision**: Stateless per-request (Phase 1)
-- No persistent memory across sessions
-- Context limited to current n8n workflow execution
+**Decision**: Ephemeral session-based context (Phase 1) [Revised from stateless]
+- Context managed via n8n workflow variables or lightweight cache (e.g., Redis, Upstash)
+- No persistent memory across sessions initially
 - Onshape provides version history (external memory)
 
-**Rationale**: Simplify MVP, Onshape already tracks design history
+**Rationale**: Simplify MVP while enabling iterative designs (e.g., "modify the bracket"); Onshape already tracks design history; addresses usability risks for conversational CAD workflows
 **Trade-offs**: ✅ No database needed, simple | ❌ Can't learn from past designs, no user preferences
 **Future Enhancement**:
 - Phase 2: Session memory (recent conversation)
@@ -125,13 +125,14 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 
 ## Observability Stack
 
-**Decision**: Basic logging (Phase 1)
+**Decision**: Enhanced basic logging (Phase 1)
 - n8n execution logs (built-in)
 - Onshape API response logging
+- Extend to a free aggregator like Logtail or Papertrail for JSON-structured logs and searchability
 - Manual error review
 
-**Rationale**: n8n provides adequate visibility for MVP
-**Trade-offs**: ✅ No additional infrastructure | ❌ Limited analytics, no tracing
+**Rationale**: n8n provides adequate visibility for MVP; log aggregator upgrade improves debugging efficiency for multiple runs
+**Trade-offs**: ✅ Minimal infrastructure overhead | ❌ Limited analytics, no tracing
 **Future Enhancement**:
 - Structured logging (JSON)
 - Error aggregation (Sentry or similar)
@@ -191,13 +192,13 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 
 ## Cost Controls
 
-**Decision**: Manual monitoring (Phase 1)
+**Decision**: Automated monitoring with alerts (Phase 1)
 - Track Claude API usage monthly
 - Track Onshape API calls (free tier: unlimited for now)
-- No automated limits initially
+- Automate alerts via n8n webhooks (e.g., email notifications if thresholds exceeded)
 
-**Rationale**: Free tier sufficient for MVP, premature to add cost infrastructure
-**Trade-offs**: ✅ No overhead | ❌ Could overspend if usage spikes
+**Rationale**: Free tier sufficient for MVP; automated alerts prevent overspending from agent loops
+**Trade-offs**: ✅ Proactive cost management | ❌ Minimal initial overhead for setup
 **Thresholds**: Set alerts at $50/month Claude usage
 **Revisit**: Implement hard limits if approaching $100/month or leaving free tier
 
@@ -302,7 +303,7 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 **Trade-offs**: ✅ Simpler | ❌ Can't leverage past designs
 **Future Enhancement**:
 - Phase 3: CAD pattern library (common brackets, enclosures)
-- Vector DB for design search (Pinecone, Chroma)
+- Vector DB for design search (e.g., Pinecone, Chroma)
 - Retrieval of similar designs
 
 **Revisit**: When users ask "make something like the bracket from project X"
@@ -368,13 +369,28 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 
 ---
 
+## Quantitative Metrics for Revisit Triggers
+
+Track these metrics from Day 1 to inform decisions:
+
+1. **One-Shot Success Rate**: Percentage of prompts resulting in usable STL without follow-up (Target: >40% for MVP)
+2. **Tool Error Rate**: Frequency of Onshape 4xx errors (measures API understanding)
+3. **Wall-Clock Latency**: Total time from user input to Onshape render (Target: <30s)
+4. **Human Override Rate**: How often HITL rejects agent's CAD plan (Target: <20%)
+5. **Cost Per Success**: Average Claude API cost per usable CAD output (Track: should stay <$0.50)
+6. **Feature Accuracy**: Percentage of requested features correctly implemented (Target: >80%)
+
+**Usage**: Review metrics weekly; trigger architecture revisits when targets missed consistently (3+ weeks)
+
+---
+
 ## Decision Status
 
 | Area | Status | Revisit Trigger |
 |------|--------|----------------|
 | Agent Pattern | ✅ Decided | v0.2.0 or complexity increase |
 | Tool Selection | ✅ Decided | After 10 CAD generations |
-| Memory Architecture | ✅ Decided | User requests past design access |
+| Memory Architecture | ✅ Revised | User requests past design access |
 | HITL Design | ✅ Decided | Phase 2 - trusted ops |
 | Testing Framework | ⚠️ Minimal | After first regression |
 | RAG/Data Pipeline | ❌ Not Needed | Pattern reuse requests |
@@ -402,4 +418,5 @@ This document records architectural choices for the AgentCAD agentic CAD automat
 ---
 
 **Revision History**
+- 2026-01-11: Incorporated feedback on memory, observability, cost controls, LangGraph nuance, and added quantitative metrics (v0.1.1)
 - 2026-01-11: Initial architecture decisions (v0.1.0)
