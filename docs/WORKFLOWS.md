@@ -6,9 +6,21 @@ This document describes the n8n workflows for the AgentCAD project.
 
 ## Workflow List
 
-### Coming Soon
+### AgentCAD (Main Workflow)
 
-Workflow descriptions and requirements will be added here.
+- **Workflow ID**: `ueHbmJPw9U4FTRk6`
+- **Status**: Inactive (blank template)
+- **Created**: 2026-01-11
+- **File**: [agentcad-workflow.json](../workflows/agentcad-workflow.json)
+
+**Description**:
+Main AgentCAD workflow. Currently blank, awaiting detailed requirements and implementation.
+
+**Purpose**:
+To be defined based on project requirements.
+
+**Nodes**:
+None yet - blank workflow template ready for development.
 
 ## Workflow Development Guidelines
 

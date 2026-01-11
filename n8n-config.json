@@ -7,6 +7,15 @@
     "projectId": "vrikaMvfkO4wce9w",
     "apiVersion": "v1"
   },
-  "workflows": [],
-  "notes": "Workflow configurations will be added as they are created"
+  "workflows": [
+    {
+      "id": "ueHbmJPw9U4FTRk6",
+      "name": "AgentCAD",
+      "file": "workflows/agentcad-workflow.json",
+      "active": false,
+      "created": "2026-01-11",
+      "description": "Main AgentCAD workflow - blank template"
+    }
+  ],
+  "notes": "Main AgentCAD workflow created and ready for implementation"
 }
