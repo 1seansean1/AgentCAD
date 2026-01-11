@@ -13,10 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Onshape chosen as web-based CAD platform for AI agents
   - Updated workflow documentation with Onshape integration details
   - Added Onshape credentials to `.env.example`
+- Onshape API setup and verification
+  - API credentials generated and securely stored in `.env`
+  - API connection tested and verified successfully
+  - Full API access confirmed (OAuth2 scopes: 4127)
+  - User permissions: OWNER level with READ, WRITE, DELETE, COPY, EXPORT, RESHARE
+  - Account: Sean Allen (sean.p.allen9@gmail.com) - Free plan with DEVELOPER role
+  - Updated `docs/ONSHAPE_INTEGRATION.md` with setup status
 
 ### Planned
-- Set up Onshape account and generate API keys
-- Configure Onshape credentials in n8n
+- Configure Onshape credentials in n8n workflow
 - Build proof-of-concept workflow nodes:
   - Document creation
   - FeatureScript execution
