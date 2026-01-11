@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - User permissions: OWNER level with READ, WRITE, DELETE, COPY, EXPORT, RESHARE
   - Account: Sean Allen (sean.p.allen9@gmail.com) - Free plan with DEVELOPER role
   - Updated `docs/ONSHAPE_INTEGRATION.md` with setup status
+- Architecture decision documentation
+  - `docs/ARCHITECTURE.md` - Comprehensive architecture decisions record
+  - Documented 20+ architectural choices with rationale
+  - Covered: governance, hosting, agent patterns, tools, memory, security, HITL, testing, etc.
+  - Simple format with minimal sub-headings for easy reference
+  - Decision status tracking and revisit triggers
+  - Open questions and future considerations documented
 
 ### Planned
 - Configure Onshape credentials in n8n workflow

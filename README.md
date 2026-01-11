@@ -64,6 +64,7 @@ All project documentation is located in the [docs/](docs/) directory:
 - [SETUP.md](docs/SETUP.md) - Setup and configuration
 - [WORKFLOWS.md](docs/WORKFLOWS.md) - Workflow definitions and requirements
 - [ONSHAPE_INTEGRATION.md](docs/ONSHAPE_INTEGRATION.md) - Onshape CAD platform integration guide
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Architecture decisions and design rationale
 - [CHANGELOG.md](CHANGELOG.md) - Project change history and version tracking
 
 ## Contributing
