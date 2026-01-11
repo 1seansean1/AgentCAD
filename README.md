@@ -16,6 +16,7 @@ AgentCAD/
 ├── workflows/         # n8n workflow JSON exports
 ├── .env              # Environment variables (not committed)
 ├── .env.example      # Template for environment variables
+├── CHANGELOG.md      # Project change history
 ├── n8n-config.json   # n8n project configuration
 ├── .gitignore        # Git ignore rules
 └── README.md         # This file
@@ -62,6 +63,7 @@ AgentCAD/
 All project documentation is located in the [docs/](docs/) directory:
 - [SETUP.md](docs/SETUP.md) - Setup and configuration
 - [WORKFLOWS.md](docs/WORKFLOWS.md) - Workflow definitions and requirements
+- [CHANGELOG.md](CHANGELOG.md) - Project change history and version tracking
 
 ## Contributing
 
